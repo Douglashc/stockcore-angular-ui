@@ -18,6 +18,8 @@ import { CategoryFormComponent } from './components/categories/category-form/cat
 import { ProductFormComponent } from './components/products/product-form/product-form.component';
 import { LoteFormComponent } from './components/lots/lote-form/lote-form.component';
 import { UserFormComponent } from './components/users/user-form/user-form.component';
+import { ClientFormComponent } from './components/clients/client-form/client-form.component';
+import { ClientsPageComponent } from './pages/clients-page/clients-page.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { UserFormComponent } from './components/users/user-form/user-form.compon
     CategoryFormComponent,
     ProductFormComponent,
     LoteFormComponent,
-    UserFormComponent
+    UserFormComponent,
+    ClientFormComponent,
+    ClientsPageComponent
   ],
   imports: [
     CommonModule,

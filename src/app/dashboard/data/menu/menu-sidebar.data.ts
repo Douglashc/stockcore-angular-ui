@@ -26,7 +26,7 @@ export const menuSidebarData: MenuGroup[] = [
         groupTitle: 'Contactos',
         items: [
             { title: 'Proveedores', icon: 'storefront', route: '/dashboard/proveedores' },
-            { title: 'Clientes', icon: 'people', route: '/dashboard/clientes' }
+            { title: 'Clientes', icon: 'people', route: '/dashboard/clients' }
         ]
     },
     {

@@ -6,6 +6,7 @@ import { CategoriesPageComponent } from './pages/categories-page/categories-page
 import { ProductsPageComponent } from './pages/products-page/products-page.component';
 import { LotesPageComponent } from './pages/lotes-page/lotes-page.component';
 import { UsersPageComponent } from './pages/users-page/users-page.component';
+import { ClientsPageComponent } from './pages/clients-page/clients-page.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,7 @@ const routes: Routes = [
       { path: 'products', component: ProductsPageComponent },
       { path: 'lots', component: LotesPageComponent },
       { path: 'users', component: UsersPageComponent },
+      { path: 'clients', component: ClientsPageComponent },
       { path: '', redirectTo: 'summary', pathMatch: 'full' },
       { path: '**', redirectTo: 'summary' }
     ]
