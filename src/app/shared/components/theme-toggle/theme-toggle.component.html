@@ -1,0 +1,14 @@
+<button type="button" (click)="toggle()" class="flex items-center justify-center w-9 h-9 rounded-lg border transition-all duration-200 outline-none shadow-sm
+         bg-slate-100 border-slate-200 text-slate-500 hover:text-slate-800 hover:bg-slate-200
+         dark:bg-slate-800 dark:border-slate-700/50 dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-700"
+    title="Cambiar tema">
+
+    <span *ngIf="themeService.currentTheme" class="material-icons text-amber-500 text-lg">
+        light_mode
+    </span>
+
+    <span *ngIf="!themeService.currentTheme" class="material-icons text-indigo-500 text-lg">
+        dark_mode
+    </span>
+
+</button>
