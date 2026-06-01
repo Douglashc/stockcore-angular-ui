@@ -1,0 +1,78 @@
+<div
+    class="px-6 py-4 border-b border-slate-100 dark:border-slate-800/60 flex justify-between items-center bg-slate-50/50 dark:bg-slate-950/20">
+    <div>
+        <h2 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <span class="material-icons text-indigo-500 text-lg">local_shipping</span>
+            {{ data?.supplierId ? 'Modificar Información del Proveedor' : 'Registrar Nuevo Proveedor' }}
+        </h2>
+        <p class="text-[11px] text-slate-400 dark:text-slate-500">Administración de proveedores, canales de contacto y
+            datos tributarios.</p>
+    </div>
+    <button type="button" (click)="cancel()"
+        class="p-1 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+        <span class="material-icons text-lg">close</span>
+    </button>
+</div>
+
+<form [formGroup]="supplierForm" class="p-6 space-y-4 text-sm max-h-[75vh] overflow-y-auto custom-scroll">
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="sm:col-span-2">
+            <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5 uppercase">Nombre /
+                Razón Social *</label>
+            <input formControlName="name" type="text" placeholder="Ej: Gustavo Lara Pinto"
+                class="w-full px-3 py-2 rounded-xl border outline-none transition-all bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 focus:border-indigo-500" />
+        </div>
+
+        <div>
+            <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5 uppercase">Número NIT
+                *</label>
+            <input formControlName="nit" type="text" placeholder="Ej: 14585152"
+                class="w-full px-3 py-2 rounded-xl border outline-none font-mono text-xs transition-all bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 focus:border-indigo-500" />
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+            <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5 uppercase">Teléfono de
+                Contacto *</label>
+            <div class="relative">
+                <span
+                    class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-base">phone</span>
+                <input formControlName="phoneNumber" type="text" placeholder="Ej: 68451200"
+                    class="w-full pl-9 pr-4 py-2 rounded-xl border outline-none transition-all bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 focus:border-indigo-500" />
+            </div>
+        </div>
+
+        <div>
+            <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5 uppercase">Correo
+                Electrónico</label>
+            <input formControlName="email" type="email" placeholder="proveedor@correo.com"
+                class="w-full px-3 py-2 rounded-xl border outline-none transition-all bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 focus:border-indigo-500" />
+        </div>
+    </div>
+
+    <div>
+        <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5 uppercase">Sitio Web /
+            Catálogo Digital</label>
+        <div class="relative">
+            <span
+                class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-base">language</span>
+            <input formControlName="webUrl" type="text" placeholder="Ej: www.Guss.com"
+                class="w-full pl-9 pr-4 py-2 rounded-xl border outline-none font-mono text-xs transition-all bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 focus:border-indigo-500" />
+        </div>
+    </div>
+
+</form>
+
+<div
+    class="px-6 py-4 border-t flex items-center justify-end gap-3 bg-slate-50/50 dark:bg-slate-950/20 border-slate-100 dark:border-slate-800/60">
+    <button type="button" (click)="cancel()"
+        class="px-4 py-2 text-xs font-medium border rounded-xl bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100">
+        Cancelar
+    </button>
+    <button type="button" (click)="save()" [disabled]="supplierForm.invalid"
+        class="px-4 py-2 text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-xl transition-all disabled:opacity-40">
+        Guardar Proveedor
+    </button>
+</div>

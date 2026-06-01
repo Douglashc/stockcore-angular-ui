@@ -9,8 +9,8 @@ import { DialogService } from 'src/app/shared/services/dialog.service';
 })
 export class UserFormComponent implements OnInit {
 
-  #fb = inject(FormBuilder);
-  #dialogService = inject(DialogService);
+  readonly #fb = inject(FormBuilder);
+  readonly #dialogService = inject(DialogService);
 
   public usuarioForm!: FormGroup;
   public data = this.#dialogService.config().data;

@@ -20,6 +20,8 @@ import { LoteFormComponent } from './components/lots/lote-form/lote-form.compone
 import { UserFormComponent } from './components/users/user-form/user-form.component';
 import { ClientFormComponent } from './components/clients/client-form/client-form.component';
 import { ClientsPageComponent } from './pages/clients-page/clients-page.component';
+import { SupplierFormComponent } from './components/suppliers/supplier-form/supplier-form.component';
+import { SuppliersPageComponent } from './pages/suppliers-page/suppliers-page.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { ClientsPageComponent } from './pages/clients-page/clients-page.componen
     LoteFormComponent,
     UserFormComponent,
     ClientFormComponent,
-    ClientsPageComponent
+    ClientsPageComponent,
+    SupplierFormComponent,
+    SuppliersPageComponent
   ],
   imports: [
     CommonModule,

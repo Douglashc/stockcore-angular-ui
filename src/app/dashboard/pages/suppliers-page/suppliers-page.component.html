@@ -1,0 +1,123 @@
+<div class="space-y-6 animate-fade-in">
+
+  <shared-title-section 
+    [title]="'Proveedores'" 
+    [description]="'Catálogo maestro de proveedores logísticos, control de NIT corporativos e índices de contacto rápido.'">
+  </shared-title-section>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+    <shared-card-simple-count
+      [title]="'Proveedores Activos'"
+      [description]="'Cartera de abastecimiento'"
+      [logoClass]="'material-icons text-2xl'"
+      [logoSpan]="'storefront'" 
+      [totalItem]="totalSuppliersCount()">
+    </shared-card-simple-count>
+
+    <div class="p-5 rounded-2xl border bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800/80 shadow-sm md:col-span-2 flex flex-col sm:flex-row items-center gap-4 justify-between">
+      <div class="relative w-full sm:max-w-xs">
+        <span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+        <input type="text" [value]="searchTerm()" (input)="onSearchChange($event)"
+               placeholder="Buscar por proveedor, NIT, fono..." 
+               class="w-full pl-9 pr-4 py-2 text-sm rounded-xl border outline-none transition-all bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 focus:border-indigo-500" />
+      </div>
+
+      <button type="button" (click)="openFormDialog()"
+              class="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-xl transition-all shadow-sm shadow-indigo-600/10">
+        <span class="material-icons text-base">local_shipping</span>
+        <span>Registrar Supplier</span>
+      </button>
+    </div>
+
+  </div>
+
+  <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 rounded-2xl shadow-sm overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/20 text-slate-400 dark:text-slate-500 text-[11px] font-bold uppercase tracking-wider">
+            <th class="py-4 px-5">Proveedor / Razón Social</th>
+            <th class="py-4 px-4">NIT</th>
+            <th class="py-4 px-4">Canales de Contacto</th>
+            <th class="py-4 px-4">Sitio Web</th>
+            <th class="py-4 px-4 text-center">Estado</th>
+            <th class="py-4 px-5 text-right">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100 dark:divide-slate-800/60 text-sm">
+
+          <tr *ngFor="let supplier of pagedSuppliers()" class="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors group">
+            
+            <td class="py-3.5 px-5 font-semibold text-slate-800 dark:text-slate-200">
+              {{ supplier.name }}
+            </td>
+
+            <td class="py-3.5 px-4 font-mono text-xs text-slate-600 dark:text-slate-400">
+              {{ supplier.nit }}
+            </td>
+
+            <td class="py-3.5 px-4">
+              <div class="flex flex-col gap-0.5 text-xs">
+                <p class="text-slate-700 dark:text-slate-300 font-medium flex items-center gap-1">
+                  <span class="material-icons text-xs text-slate-400">phone</span> {{ supplier.phoneNumber }}
+                </p>
+                <p *ngIf="supplier.email" class="text-slate-400 dark:text-slate-500 text-[11px] truncate max-w-[150px]">
+                  {{ supplier.email }}
+                </p>
+              </div>
+            </td>
+
+            <td class="py-3.5 px-4 font-mono text-xs">
+              <a *ngIf="supplier.webUrl" [href]="'http://' + supplier.webUrl" target="_blank" 
+                 class="text-indigo-500 dark:text-indigo-400 hover:underline flex items-center gap-0.5">
+                {{ supplier.webUrl }} <span class="material-icons text-[10px]">open_in_new</span>
+              </a>
+              <span *ngIf="!supplier.webUrl" class="text-slate-300 dark:text-slate-700">--</span>
+            </td>
+
+            <td class="py-3.5 px-4 text-center">
+              <div class="flex items-center justify-center gap-2">
+                <label class="relative inline-flex items-center cursor-pointer select-none">
+                  <input type="checkbox" [checked]="supplier.active" (change)="toggleSupplierActive(supplier.id)" class="sr-only peer" />
+                  <div class="w-8 h-4 rounded-full bg-slate-200 dark:bg-slate-800 transition-all duration-200 peer-checked:bg-emerald-500 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:after:translate-x-4"></div>
+                </label>
+                <span [ngClass]="supplier.active ? 'text-emerald-500 font-medium' : 'text-slate-400'" class="text-[11px] w-12 text-left">
+                  {{ supplier.active ? 'Activo' : 'Bloqueado' }}
+                </span>
+              </div>
+            </td>
+
+            <td class="py-3.5 px-5 text-right">
+              <div class="flex items-center justify-end gap-1.5">
+                <button type="button" (click)="openFormDialog(supplier.id)" class="p-1.5 rounded-lg text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all">
+                  <span class="material-icons text-lg">edit</span>
+                </button>
+                <button type="button" class="p-1.5 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-all">
+                  <span class="material-icons text-lg">delete_outline</span>
+                </button>
+              </div>
+            </td>
+
+          </tr>
+
+          <tr *ngIf="pagedSuppliers().length === 0">
+            <td colspan="6" class="py-12 text-center text-slate-400 dark:text-slate-500">
+              <span class="material-icons text-3xl block mb-2">search_off</span>
+              <p class="text-sm font-medium">No se encontraron proveedores registrados para "{{ searchTerm() }}"</p>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <shared-paginator 
+      [currentPage]="currentPage()" 
+      [totalPages]="totalPages()" 
+      (pageChange)="onPageChange($event)">
+    </shared-paginator>
+
+  </div>
+
+</div>
