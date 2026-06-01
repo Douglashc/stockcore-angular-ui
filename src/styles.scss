@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* Ocultar barra por defecto y estilizarla de forma minimalista */
+.custom-scroll {
+  scrollbar-width: thin; /* Para Firefox */
+  scrollbar-color: rgba(156, 163, 175, 0.3) transparent; /* Para Firefox */
+}
+
+/* Para navegadores Chrome, Safari y Edge (Webkit) */
+.custom-scroll::-webkit-scrollbar {
+  width: 5px; /* Barra delgadísima de 5 píxeles */
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: transparent; /* Fondo invisible */
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.2); /* Gris sutil */
+  border-radius: 20px; /* Bordes totalmente redondeados */
+  transition: background-color 0.2s ease;
+}
+
+/* Cambia de color sutilmente al pasar el mouse por encima */
+.custom-scroll:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(99, 102, 241, 0.4); /* Cambia a un tono índigo suave al hacer scroll */
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
