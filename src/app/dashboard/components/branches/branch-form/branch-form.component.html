@@ -1,0 +1,58 @@
+<div
+    class="px-6 py-4 border-b border-slate-100 dark:border-slate-800/60 flex justify-between items-center bg-slate-50/50 dark:bg-slate-950/20">
+    <div>
+        <h2 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            <span class="material-icons text-indigo-500 text-lg">business</span>
+            {{ data?.branchId ? 'Modificar Sucursal' : 'Registrar Nueva Sucursal' }}
+        </h2>
+        <p class="text-[11px] text-slate-400 dark:text-slate-500">Configuración de puntos de distribución y venta de
+            OmniLink.</p>
+    </div>
+    <button type="button" (click)="cancel()"
+        class="p-1 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+        <span class="material-icons text-lg">close</span>
+    </button>
+</div>
+
+<form [formGroup]="branchForm" class="p-6 space-y-4 text-sm">
+
+    <div>
+        <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5 uppercase">Nombre de la
+            Sucursal *</label>
+        <input formControlName="name" type="text" placeholder="Ej: Sucursal mundo compra"
+            class="w-full px-3 py-2 rounded-xl border outline-none transition-all bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 focus:border-indigo-500" />
+    </div>
+
+    <div>
+        <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5 uppercase">Dirección Física
+            *</label>
+        <div class="relative">
+            <span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-base">place</span>
+            <input formControlName="direction" type="text" placeholder="Ej: Calle America #123"
+                class="w-full pl-9 pr-4 py-2 rounded-xl border outline-none transition-all bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 focus:border-indigo-500" />
+        </div>
+    </div>
+
+    <div>
+        <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5 uppercase">Teléfono / Línea
+            de Contacto *</label>
+        <div class="relative">
+            <span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-base">phone</span>
+            <input formControlName="phoneNumber" type="text" placeholder="Ej: 74851254"
+                class="w-full pl-9 pr-4 py-2 rounded-xl border outline-none transition-all bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 focus:border-indigo-500" />
+        </div>
+    </div>
+
+</form>
+
+<div
+    class="px-6 py-4 border-t flex items-center justify-end gap-3 bg-slate-50/50 dark:bg-slate-950/20 border-slate-100 dark:border-slate-800/60">
+    <button type="button" (click)="cancel()"
+        class="px-4 py-2 text-xs font-medium border rounded-xl bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100">
+        Cancelar
+    </button>
+    <button type="button" (click)="save()" [disabled]="branchForm.invalid"
+        class="px-4 py-2 text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-xl transition-all disabled:opacity-40">
+        Guardar Sucursal
+    </button>
+</div>

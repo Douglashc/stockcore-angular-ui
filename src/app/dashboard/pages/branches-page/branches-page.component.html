@@ -1,0 +1,129 @@
+<div class="space-y-6 animate-fade-in">
+
+  <shared-title-section 
+    [title]="'Sucursales'" 
+    [description]="'Administración y monitoreo de puntos físicos de almacenamiento y distribución de mercadería.'">
+  </shared-title-section>
+
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+    
+    <shared-card-simple-count
+      [title]="'Total Sucursales'"
+      [description]="'Todas las sedes'"
+      [logoClass]="'material-icons text-xl'"
+      [logoSpan]="'business'" 
+      [totalItem]="totalBranchesCount()">
+    </shared-card-simple-count>
+
+    <shared-card-simple-count
+      [title]="'Sucursales Activas'"
+      [description]="'Operando en tiempo real'"
+      [logoClass]="'material-icons text-xl text-emerald-500'"
+      [logoSpan]="'check_circle_outline'" 
+      [totalItem]="activeBranchesCount()">
+    </shared-card-simple-count>
+
+    <shared-card-simple-count
+      [title]="'Sucursales Inactivas'"
+      [description]="'Deshabilitadas temporalmente'"
+      [logoClass]="'material-icons text-xl text-rose-500'"
+      [logoSpan]="'highlight_off'" 
+      [totalItem]="inactiveBranchesCount()">
+    </shared-card-simple-count>
+
+  </div>
+
+  <div class="p-5 rounded-2xl border bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800/80 shadow-sm flex flex-col sm:flex-row items-center gap-4 justify-between">
+    <div class="relative w-full sm:max-w-xs">
+      <span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+      <input type="text" [value]="searchTerm()" (input)="onSearchChange($event)"
+             placeholder="Buscar sucursal por nombre o dirección..." 
+             class="w-full pl-9 pr-4 py-2 text-sm rounded-xl border outline-none transition-all bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 focus:border-indigo-500" />
+    </div>
+
+    <button type="button" (click)="openFormDialog()"
+            class="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-xl transition-all shadow-sm shadow-indigo-600/10">
+      <span class="material-icons text-base">add_business</span>
+      <span>Nueva Sucursal</span>
+    </button>
+  </div>
+
+  <div *ngIf="pagedBranches().length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+    
+    <div *ngFor="let branch of pagedBranches()" 
+         [ngClass]="branch.active ? 'border-l-4 border-l-emerald-500' : 'border-l-4 border-l-rose-500'"
+         class="relative p-6 rounded-2xl border bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800/80 shadow-sm transition-all duration-200 hover:shadow-md flex flex-col justify-between group h-52">
+      
+      <div>
+        <div class="flex items-start justify-between">
+          <div class="flex items-center gap-3">
+            <div [ngClass]="branch.active ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400'"
+                 class="w-10 h-10 rounded-xl flex items-center justify-center">
+              <span class="material-icons text-xl">store</span>
+            </div>
+            <div>
+              <h3 class="font-bold text-slate-800 dark:text-white tracking-tight text-sm truncate max-w-[160px]" [title]="branch.name">
+                {{ branch.name }}
+              </h3>
+              <span *ngIf="branch.active" class="inline-flex items-center gap-1 mt-0.5 px-2 py-0.5 text-[10px] font-medium rounded-full bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                <span class="w-1 h-1 rounded-full bg-emerald-500"></span> Activa
+              </span>
+              <span *ngIf="!branch.active" class="inline-flex items-center gap-1 mt-0.5 px-2 py-0.5 text-[10px] font-medium rounded-full bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400">
+                <span class="w-1 h-1 rounded-full bg-rose-500"></span> Inactiva
+              </span>
+            </div>
+          </div>
+
+          <button (click)="toggleBranchStatus(branch.id)"
+                  class="text-slate-400 hover:text-slate-600 dark:hover:text-white p-1 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800" 
+                  [title]="branch.active ? 'Desactivar sucursal' : 'Activar sucursal'">
+            <span class="material-icons text-lg">more_vert</span>
+          </button>
+        </div>
+
+        <div class="mt-4 space-y-2 text-xs text-slate-500 dark:text-slate-400">
+          <p class="flex items-start gap-2">
+            <span class="material-icons text-sm text-slate-400 mt-0.5 flex-shrink-0">place</span>
+            <span class="truncate" [title]="branch.direction">{{ branch.direction }}</span>
+          </p>
+          <p class="flex items-center gap-2">
+            <span class="material-icons text-sm text-slate-400 flex-shrink-0">phone</span>
+            <span class="font-mono">{{ branch.phoneNumber }}</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2.5 pt-4 border-t border-slate-100 dark:border-slate-800/60 mt-4">
+        <button type="button" (click)="openFormDialog(branch.id)"
+                class="flex items-center justify-center gap-1 px-3 py-1.5 text-xs font-medium border rounded-xl transition-all
+                       bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 hover:bg-slate-50 hover:dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+          <span class="material-icons text-sm">edit</span>
+          <span>Editar</span>
+        </button>
+        <button type="button" 
+                class="flex items-center justify-center gap-1 px-3 py-1.5 text-xs font-medium border rounded-xl transition-all
+                       bg-rose-50/20 dark:bg-rose-500/5 border-rose-200/40 dark:border-rose-500/20 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-500/10">
+          <span class="material-icons text-sm">delete_outline</span>
+          <span>Eliminar</span>
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div *ngIf="pagedBranches().length === 0" 
+       class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 rounded-2xl shadow-sm p-12 text-center text-slate-400 dark:text-slate-500">
+    <span class="material-icons text-3xl block mb-2">search_off</span>
+    <p class="text-sm font-medium">No se encontraron sucursales para "{{ searchTerm() }}"</p>
+  </div>
+
+  <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 rounded-2xl shadow-sm overflow-hidden">
+    <shared-paginator 
+      [currentPage]="currentPage()" 
+      [totalPages]="totalPages()" 
+      (pageChange)="onPageChange($event)">
+    </shared-paginator>
+  </div>
+
+</div>

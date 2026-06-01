@@ -22,6 +22,8 @@ import { ClientFormComponent } from './components/clients/client-form/client-for
 import { ClientsPageComponent } from './pages/clients-page/clients-page.component';
 import { SupplierFormComponent } from './components/suppliers/supplier-form/supplier-form.component';
 import { SuppliersPageComponent } from './pages/suppliers-page/suppliers-page.component';
+import { BranchFormComponent } from './components/branches/branch-form/branch-form.component';
+import { BranchesPageComponent } from './pages/branches-page/branches-page.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { SuppliersPageComponent } from './pages/suppliers-page/suppliers-page.co
     ClientFormComponent,
     ClientsPageComponent,
     SupplierFormComponent,
-    SuppliersPageComponent
+    SuppliersPageComponent,
+    BranchFormComponent,
+    BranchesPageComponent
   ],
   imports: [
     CommonModule,

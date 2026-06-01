@@ -8,6 +8,7 @@ import { LotesPageComponent } from './pages/lotes-page/lotes-page.component';
 import { UsersPageComponent } from './pages/users-page/users-page.component';
 import { ClientsPageComponent } from './pages/clients-page/clients-page.component';
 import { SuppliersPageComponent } from './pages/suppliers-page/suppliers-page.component';
+import { BranchesPageComponent } from './pages/branches-page/branches-page.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
       { path: 'users', component: UsersPageComponent },
       { path: 'clients', component: ClientsPageComponent },
       { path: 'suppliers', component: SuppliersPageComponent },
+      { path: 'branches', component: BranchesPageComponent },
       { path: '', redirectTo: 'summary', pathMatch: 'full' },
       { path: '**', redirectTo: 'summary' }
     ]

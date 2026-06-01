@@ -32,7 +32,7 @@ export const menuSidebarData: MenuGroup[] = [
     {
         groupTitle: 'Sistema',
         items: [
-            { title: 'Sucursales', icon: 'business', route: '/dashboard/sucursales' },
+            { title: 'Sucursales', icon: 'business', route: '/dashboard/branches' },
             { title: 'Usuarios y Roles', icon: 'manage_accounts', route: '/dashboard/users' }
         ]
     }
