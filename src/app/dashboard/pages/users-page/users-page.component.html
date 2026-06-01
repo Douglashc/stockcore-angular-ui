@@ -1,0 +1,134 @@
+<div class="space-y-6 animate-fade-in">
+
+    <shared-title-section [title]="'Control de Usuarios'"
+        [description]="'Gestión de operadores del sistema, credenciales de inicio de sesión y privilegios jerárquicos.'">
+    </shared-title-section>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+        <shared-card-simple-count 
+            [title]="'Operadores Registrados'" 
+            [description]="'Accesos mapeados'"
+            [logoClass]="'material-icons text-2xl'" 
+            [logoSpan]="'people_alt'" [totalItem]="totalUsersCount()">
+        </shared-card-simple-count>
+
+        <div
+            class="p-5 rounded-2xl border bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800/80 shadow-sm md:col-span-2 flex flex-col sm:flex-row items-center gap-4 justify-between">
+            <div class="relative w-full sm:max-w-xs">
+                <span
+                    class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+                <input type="text" [value]="searchTerm()" (input)="onSearchChange($event)"
+                    placeholder="Buscar por nombre, CI, usuario..."
+                    class="w-full pl-9 pr-4 py-2 text-sm rounded-xl border outline-none transition-all bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 focus:border-indigo-500" />
+            </div>
+
+            <button type="button" (click)="openFormDialog()"
+                class="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-xl transition-all shadow-sm shadow-indigo-600/10">
+                <span class="material-icons text-base">person_add_alt</span>
+                <span>Nuevo Usuario</span>
+            </button>
+        </div>
+
+    </div>
+
+    <div
+        class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 rounded-2xl shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr
+                        class="border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/20 text-slate-400 dark:text-slate-500 text-[11px] font-bold uppercase tracking-wider">
+                        <th class="py-4 px-5">Personal</th>
+                        <th class="py-4 px-4">Cédula (CI)</th>
+                        <th class="py-4 px-4">Usuario</th>
+                        <th class="py-4 px-4">Rol de Acceso</th>
+                        <th class="py-4 px-4 text-center">Estado</th>
+                        <th class="py-4 px-5 text-right">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 dark:divide-slate-800/60 text-sm">
+
+                    <tr *ngFor="let user of pagedUsuarios()"
+                        class="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors group">
+
+                        <td class="py-3.5 px-5 flex items-center gap-3">
+                            <div
+                                class="w-9 h-9 rounded-full bg-indigo-500/10 border border-slate-200 dark:border-slate-700 overflow-hidden flex items-center justify-center flex-shrink-0 font-bold text-indigo-500 uppercase text-xs">
+                                <img *ngIf="user.imageUrl" [src]="user.imageUrl" alt="Avatar"
+                                    class="w-full h-full object-cover" />
+                                <span *ngIf="!user.imageUrl">{{ user.name[0] }}{{ user.lastName[0] }}</span>
+                            </div>
+                            <div class="min-w-0">
+                                <p class="font-semibold text-slate-800 dark:text-slate-200 truncate">{{ user.name }} {{
+                                    user.lastName }}</p>
+                                <p class="text-xs text-slate-400 dark:text-slate-500 truncate max-w-[180px]">{{
+                                    user.email }}</p>
+                            </div>
+                        </td>
+
+                        <td class="py-3.5 px-4 font-mono text-xs text-slate-600 dark:text-slate-400">
+                            {{ user.ci }}
+                        </td>
+
+                        <td class="py-3.5 px-4 font-medium text-slate-700 dark:text-slate-300">
+                            &#64;{{ user.userName }}
+                        </td>
+
+                        <td class="py-3.5 px-4">
+                            <span
+                                [ngClass]="user.roleId === 1 ? 'bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'"
+                                class="text-xs px-2.5 py-0.5 font-medium rounded-md border border-slate-200/40 dark:border-slate-700/30">
+                                {{ user.roleName }}
+                            </span>
+                        </td>
+
+                        <td class="py-3.5 px-4 text-center">
+                            <div class="flex items-center justify-center gap-2">
+                                <label class="relative inline-flex items-center cursor-pointer select-none">
+                                    <input type="checkbox" [checked]="user.active" (change)="toggleUserActive(user.id)"
+                                        class="sr-only peer" />
+                                    <div
+                                        class="w-8 h-4 rounded-full bg-slate-200 dark:bg-slate-800 transition-all duration-200 peer-checked:bg-emerald-500 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:after:translate-x-4">
+                                    </div>
+                                </label>
+                                <span [ngClass]="user.active ? 'text-emerald-500 font-medium' : 'text-slate-400'"
+                                    class="text-[11px] w-12 text-left">
+                                    {{ user.active ? 'Activo' : 'Bloqueado' }}
+                                </span>
+                            </div>
+                        </td>
+
+                        <td class="py-3.5 px-5 text-right">
+                            <div class="flex items-center justify-end gap-1.5">
+                                <button type="button" (click)="openFormDialog(user.id)"
+                                    class="p-1.5 rounded-lg text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-all">
+                                    <span class="material-icons text-lg">edit</span>
+                                </button>
+                                <button type="button"
+                                    class="p-1.5 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-all">
+                                    <span class="material-icons text-lg">no_accounts</span>
+                                </button>
+                            </div>
+                        </td>
+
+                    </tr>
+
+                    <tr *ngIf="pagedUsuarios().length === 0">
+                        <td colspan="6" class="py-12 text-center text-slate-400 dark:text-slate-500">
+                            <span class="material-icons text-3xl block mb-2">search_off</span>
+                            <p class="text-sm font-medium">No se encontraron usuarios activos para "{{ searchTerm() }}"
+                            </p>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <shared-paginator [currentPage]="currentPage()" [totalPages]="totalPages()" (pageChange)="onPageChange($event)">
+        </shared-paginator>
+
+    </div>
+
+</div>

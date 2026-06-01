@@ -5,6 +5,7 @@ import { SummaryPageComponent } from './pages/summary-page/summary-page.componen
 import { CategoriesPageComponent } from './pages/categories-page/categories-page.component';
 import { ProductsPageComponent } from './pages/products-page/products-page.component';
 import { LotesPageComponent } from './pages/lotes-page/lotes-page.component';
+import { UsersPageComponent } from './pages/users-page/users-page.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
       { path: 'categories', component: CategoriesPageComponent },
       { path: 'products', component: ProductsPageComponent },
       { path: 'lots', component: LotesPageComponent },
+      { path: 'users', component: UsersPageComponent },
       { path: '', redirectTo: 'summary', pathMatch: 'full' },
       { path: '**', redirectTo: 'summary' }
     ]

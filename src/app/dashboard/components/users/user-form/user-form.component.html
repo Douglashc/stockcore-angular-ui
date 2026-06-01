@@ -1,0 +1,85 @@
+<div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800/60 flex justify-between items-center bg-slate-50/50 dark:bg-slate-950/20">
+  <div>
+    <h2 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+      <span class="material-icons text-indigo-500 text-lg">manage_accounts</span>
+      {{ data?.userId ? 'Modificar Usuario' : 'Registrar Nuevo Usuario' }}
+    </h2>
+    <p class="text-[11px] text-slate-400 dark:text-slate-500">Credenciales de acceso, roles relacionales y perfiles.</p>
+  </div>
+  <button type="button" (click)="cancel()" class="p-1 rounded-lg text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+    <span class="material-icons text-lg">close</span>
+  </button>
+</div>
+
+<form [formGroup]="usuarioForm" class="p-6 space-y-4 text-sm max-h-[75vh] overflow-y-auto custom-scroll">
+  
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div>
+      <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5 uppercase">Nombres *</label>
+      <input formControlName="name" type="text" placeholder="Ej: Henry Douglas"
+             class="w-full px-3 py-2 rounded-xl border outline-none transition-all bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 focus:border-indigo-500" />
+    </div>
+
+    <div>
+      <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5 uppercase">Apellidos *</label>
+      <input formControlName="lastName" type="text" placeholder="Ej: Chavarria Zurita"
+             class="w-full px-3 py-2 rounded-xl border outline-none transition-all bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 focus:border-indigo-500" />
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+    <div>
+      <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5 uppercase">Cédula Identidad (CI) *</label>
+      <input formControlName="ci" type="text" placeholder="Ej: 13061452"
+             class="w-full px-3 py-2 rounded-xl border outline-none font-mono text-xs transition-all bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 focus:border-indigo-500" />
+    </div>
+
+    <div class="sm:col-span-2">
+      <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5 uppercase">Rol del Sistema *</label>
+      <select formControlName="roleId"
+              class="w-full px-3 py-2 rounded-xl border outline-none transition-all bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 focus:border-indigo-500">
+        <option [value]="null" disabled selected>Seleccione un rol jerárquico...</option>
+        <option *ngFor="let role of rolesList()" [value]="role.id">{{ role.name }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div>
+    <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5 uppercase">Correo Electrónico *</label>
+    <input formControlName="email" type="email" placeholder="nombre@correo.com"
+           class="w-full px-3 py-2 rounded-xl border outline-none transition-all bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 focus:border-indigo-500" />
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div>
+      <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5 uppercase">Nombre de Usuario *</label>
+      <input formControlName="userName" type="text" placeholder="Ej: douglash"
+             class="w-full px-3 py-2 rounded-xl border outline-none font-mono text-xs transition-all bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 focus:border-indigo-500" />
+    </div>
+
+    <div>
+      <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5 uppercase">
+        Contraseña {{ data?.userId ? '(Opcional)' : '*' }}
+      </label>
+      <input formControlName="password" type="password" placeholder="••••••••"
+             class="w-full px-3 py-2 rounded-xl border outline-none transition-all bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 focus:border-indigo-500" />
+    </div>
+  </div>
+
+  <div>
+    <label class="block text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1.5 uppercase">URL del Avatar / Imagen</label>
+    <input formControlName="imageUrl" type="text" placeholder="Enlace web o archivo de imagen..."
+           class="w-full px-3 py-2 rounded-xl border outline-none text-xs transition-all bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 focus:border-indigo-500" />
+  </div>
+
+</form>
+
+<div class="px-6 py-4 border-t flex items-center justify-end gap-3 bg-slate-50/50 dark:bg-slate-950/20 border-slate-100 dark:border-slate-800/60">
+  <button type="button" (click inversion)="cancel()" class="px-4 py-2 text-xs font-medium border rounded-xl bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100">
+    Cancelar
+  </button>
+  <button type="button" (click)="save()" [disabled]="usuarioForm.invalid"
+          class="px-4 py-2 text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-xl transition-all disabled:opacity-40">
+    Guardar Usuario
+  </button>
+</div>

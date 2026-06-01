@@ -12,10 +12,12 @@ import { SummaryPageComponent } from './pages/summary-page/summary-page.componen
 import { CategoriesPageComponent } from './pages/categories-page/categories-page.component';
 import { ProductsPageComponent } from './pages/products-page/products-page.component';
 import { LotesPageComponent } from './pages/lotes-page/lotes-page.component';
+import { UsersPageComponent } from './pages/users-page/users-page.component';
 
 import { CategoryFormComponent } from './components/categories/category-form/category-form.component';
 import { ProductFormComponent } from './components/products/product-form/product-form.component';
 import { LoteFormComponent } from './components/lots/lote-form/lote-form.component';
+import { UserFormComponent } from './components/users/user-form/user-form.component';
 
 @NgModule({
   declarations: [
@@ -26,10 +28,12 @@ import { LoteFormComponent } from './components/lots/lote-form/lote-form.compone
     CategoriesPageComponent,
     ProductsPageComponent,
     LotesPageComponent,
+    UsersPageComponent,
 
     CategoryFormComponent,
     ProductFormComponent,
-    LoteFormComponent
+    LoteFormComponent,
+    UserFormComponent
   ],
   imports: [
     CommonModule,
