@@ -9,6 +9,7 @@ import { UsersPageComponent } from './pages/users-page/users-page.component';
 import { ClientsPageComponent } from './pages/clients-page/clients-page.component';
 import { SuppliersPageComponent } from './pages/suppliers-page/suppliers-page.component';
 import { BranchesPageComponent } from './pages/branches-page/branches-page.component';
+import { BuysPageComponent } from './pages/buys-page/buys-page.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,7 @@ const routes: Routes = [
       { path: 'clients', component: ClientsPageComponent },
       { path: 'suppliers', component: SuppliersPageComponent },
       { path: 'branches', component: BranchesPageComponent },
+      { path: 'buys', component: BuysPageComponent },
       { path: '', redirectTo: 'summary', pathMatch: 'full' },
       { path: '**', redirectTo: 'summary' }
     ]

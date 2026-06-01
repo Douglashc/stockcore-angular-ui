@@ -24,6 +24,8 @@ import { SupplierFormComponent } from './components/suppliers/supplier-form/supp
 import { SuppliersPageComponent } from './pages/suppliers-page/suppliers-page.component';
 import { BranchFormComponent } from './components/branches/branch-form/branch-form.component';
 import { BranchesPageComponent } from './pages/branches-page/branches-page.component';
+import { BuyFormComponent } from './components/buys/buy-form/buy-form.component';
+import { BuysPageComponent } from './pages/buys-page/buys-page.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { BranchesPageComponent } from './pages/branches-page/branches-page.compo
     SupplierFormComponent,
     SuppliersPageComponent,
     BranchFormComponent,
-    BranchesPageComponent
+    BranchesPageComponent,
+    BuyFormComponent,
+    BuysPageComponent
   ],
   imports: [
     CommonModule,
