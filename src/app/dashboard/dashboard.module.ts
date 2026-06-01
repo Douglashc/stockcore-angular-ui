@@ -8,11 +8,14 @@ import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-l
 import { HeaderComponent } from './components/header/header.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 
+import { SummaryPageComponent } from './pages/summary-page/summary-page.component';
+
 @NgModule({
   declarations: [
     DashboardLayoutComponent,
     HeaderComponent,
     SidebarComponent,
+    SummaryPageComponent
   ],
   imports: [
     CommonModule,
