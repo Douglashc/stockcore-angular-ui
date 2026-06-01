@@ -1,0 +1,124 @@
+<div class="space-y-6 animate-fade-in">
+
+    <shared-title-section [title]="'Productos'" 
+        [description]="'Administración del catálogo maestro y control de lotes.'"
+    ></shared-title-section>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+        <shared-card-simple-count
+            [title]="'Total Productos'"
+            [description]="'En el Almacén Central'"
+            [logoClass]="'material-icons text-2xl'"
+            [logoSpan]="'inventory'" 
+            [totalItem]="totalProductsCount()"
+        ></shared-card-simple-count>
+
+        <div
+            class="p-5 rounded-2xl border bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800/80 shadow-sm md:col-span-2 flex flex-col sm:flex-row items-center gap-4 justify-between">
+
+            <div class="relative w-full sm:max-w-xs">
+                <span
+                    class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+                <input type="text" [value]="searchTerm()" (input)="onSearchChange($event)"
+                    placeholder="Buscar por nombre, código..." class="w-full pl-9 pr-4 py-2 text-sm rounded-xl border outline-none transition-all
+                 bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200
+                 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500" />
+            </div>
+
+            <button type="button" (click)="openFormDialog()"
+                class="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-xl transition-all shadow-sm shadow-indigo-600/10">
+                <span class="material-icons text-base">add</span>
+                <span>Nuevo Producto</span>
+            </button>
+
+        </div>
+
+    </div>
+
+    <div
+        class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 rounded-2xl shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr
+                        class="border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/20 text-slate-400 dark:text-slate-500 text-[11px] font-bold uppercase tracking-wider">
+                        <th class="py-4 px-5">Producto</th>
+                        <th class="py-4 px-4">Código</th>
+                        <th class="py-4 px-4">Categoría</th>
+                        <th class="py-4 px-4">Precio Venta</th>
+                        <th class="py-4 px-4 text-center">Lotes</th>
+                        <th class="py-4 px-4 text-center">Estado</th>
+                        <th class="py-4 px-5 text-right">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 dark:divide-slate-800/60 text-sm">
+
+                    <tr *ngFor="let product of pagedProducts()"
+                        class="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors group">
+                        <td class="py-3.5 px-5 flex items-center gap-3">
+                            <img [src]="product.imageUrl" [alt]="product.name"
+                                class="w-10 h-10 rounded-lg object-cover bg-slate-100 dark:bg-slate-800 border border-slate-200/60 dark:border-slate-700/50" />
+                            <div class="min-w-0">
+                                <p class="font-semibold text-slate-800 dark:text-slate-200 truncate">{{ product.name }}
+                                </p>
+                                <p class="text-xs text-slate-400 dark:text-slate-500 truncate max-w-[200px]">{{
+                                    product.description }}</p>
+                            </div>
+                        </td>
+                        <td class="py-3.5 px-4 font-mono text-xs text-slate-500 dark:text-slate-400">{{ product.code }}
+                        </td>
+                        <td class="py-3.5 px-4">
+                            <span
+                                class="text-xs px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200/50 dark:border-slate-700/30">
+                                {{ product.categoryName }}
+                            </span>
+                        </td>
+                        <td class="py-3.5 px-4 font-semibold text-slate-800 dark:text-slate-200">{{ product.salePrice |
+                            currency }}</td>
+                        <td class="py-3.5 px-4 text-center">
+                            <span *ngIf="product.handlesBatches"
+                                class="material-icons text-indigo-500 dark:text-indigo-400 text-base">assignment_turned_in</span>
+                            <span *ngIf="!product.handlesBatches"
+                                class="material-icons text-slate-300 dark:text-slate-700 text-base">remove</span>
+                        </td>
+                        <td class="py-3.5 px-4 text-center">
+                            <span *ngIf="product.active"
+                                class="inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-medium rounded-full bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                                <span class="w-1 h-1 rounded-full bg-emerald-500"></span> Activo
+                            </span>
+                            <span *ngIf="!product.active"
+                                class="inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-medium rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500">
+                                <span class="w-1 h-1 rounded-full bg-slate-400"></span> Inactivo
+                            </span>
+                        </td>
+                        <td class="py-3.5 px-5 text-right">
+                            <div class="flex items-center justify-end gap-1.5">
+                                <button type="button"
+                                    class="p-1.5 rounded-lg text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"><span
+                                        class="material-icons text-lg">edit</span></button>
+                                <button type="button"
+                                    class="p-1.5 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-all"><span
+                                        class="material-icons text-lg">layers_clear</span></button>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="pagedProducts().length === 0">
+                        <td colspan="7" class="py-12 text-center text-slate-400 dark:text-slate-500">
+                            <span class="material-icons text-3xl block mb-2">search_off</span>
+                            <p class="text-sm font-medium">No se encontraron productos para "{{ searchTerm() }}"</p>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <shared-paginator 
+            [currentPage]="currentPage()" 
+            [totalPages]="totalPages()" 
+            (pageChange)="onPageChange($event)"
+        >
+        </shared-paginator>
+    </div>
+</div>
