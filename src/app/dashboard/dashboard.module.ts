@@ -30,6 +30,7 @@ import { SaleFormComponent } from './components/sales/sale-form/sale-form.compon
 import { SalesPageComponent } from './pages/sales-page/sales-page.component';
 import { StockMovementFormComponent } from './components/stock-movements/stock-movement-form/stock-movement-form.component';
 import { StockMovementsPageComponent } from './pages/stock-movements-page/stock-movements-page.component';
+import { InventariesPageComponent } from './pages/inventaries-page/inventaries-page.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { StockMovementsPageComponent } from './pages/stock-movements-page/stock-
     SaleFormComponent,
     SalesPageComponent,
     StockMovementFormComponent,
-    StockMovementsPageComponent
+    StockMovementsPageComponent,
+    InventariesPageComponent
   ],
   imports: [
     CommonModule,

@@ -12,6 +12,7 @@ import { BranchesPageComponent } from './pages/branches-page/branches-page.compo
 import { BuysPageComponent } from './pages/buys-page/buys-page.component';
 import { SalesPageComponent } from './pages/sales-page/sales-page.component';
 import { StockMovementsPageComponent } from './pages/stock-movements-page/stock-movements-page.component';
+import { InventariesPageComponent } from './pages/inventaries-page/inventaries-page.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,7 @@ const routes: Routes = [
       { path: 'buys', component: BuysPageComponent },
       { path: 'sales', component: SalesPageComponent },
       { path: 'stock-movements', component: StockMovementsPageComponent },
+      { path: 'inventaries', component: InventariesPageComponent },
       { path: '', redirectTo: 'summary', pathMatch: 'full' },
       { path: '**', redirectTo: 'summary' }
     ]

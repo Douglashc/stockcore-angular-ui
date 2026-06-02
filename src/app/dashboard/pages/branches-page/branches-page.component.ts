@@ -17,7 +17,7 @@ export class BranchesPageComponent implements OnDestroy {
 
   public searchTerm = signal<string>('');
   public currentPage = signal<number>(1);
-  public itemsPerPage = signal<number>(3); 
+  public itemsPerPage = signal<number>(6); 
 
   public branches = signal<BranchResponseInterface[]>(BranchesAllData);
 

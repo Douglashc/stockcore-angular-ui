@@ -11,7 +11,8 @@ export const menuSidebarData: MenuGroup[] = [
         items: [
             { title: 'Productos', icon: 'store', route: '/dashboard/products' },
             { title: 'Categorías', icon: 'category', route: '/dashboard/categories' },
-            { title: 'Control de Lotes', icon: 'layers', route: '/dashboard/lots' }
+            { title: 'Control de Lotes', icon: 'layers', route: '/dashboard/lots' },
+            { title: 'Inventario General', icon: 'inventory_2', route: '/dashboard/inventaries' }
         ]
     },
     {
