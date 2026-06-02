@@ -1,0 +1,65 @@
+<div class="space-y-6 animate-fade-in">
+
+  <shared-title-section 
+    [title]="'Movimientos de Inventario'" 
+    [description]="'Kardex operativo para ajustes manuales, mermas y auditoría interna de stock por lote y sucursal.'">
+  </shared-title-section>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+    <shared-card-simple-count [title]="'Total Movimientos'" [description]="'Historial de ajustes'" [logoClass]="'material-icons text-2xl'" [logoSpan]="'history'" [totalItem]="totalMovementsCount()"></shared-card-simple-count>
+
+    <div class="p-5 rounded-2xl border bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800/80 shadow-sm md:col-span-2 flex flex-col sm:flex-row items-center gap-4 justify-between">
+      <div class="relative w-full sm:max-w-xs">
+        <span class="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+        <input type="text" [value]="searchTerm()" (input)="onSearchChange($event)" placeholder="Buscar por producto, lote, tipo..." 
+               class="w-full pl-9 pr-4 py-2 text-sm rounded-xl border outline-none bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-200 focus:border-indigo-500" />
+      </div>
+      <button type="button" (click)="openFormDialog()" class="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-500 rounded-xl transition-all shadow-sm">
+        <span class="material-icons text-base">sync_alt</span> <span>Nuevo Movimiento</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 rounded-2xl shadow-sm overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/20 text-slate-400 text-[11px] font-bold uppercase tracking-wider">
+            <th class="py-4 px-5">Fecha / Hora</th>
+            <th class="py-4 px-4">Tipo</th>
+            <th class="py-4 px-4">Producto & Lote</th>
+            <th class="py-4 px-4">Sucursal</th>
+            <th class="py-4 px-4 text-center">Cant.</th>
+            <th class="py-4 px-5">Observación</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100 dark:divide-slate-800/60 text-sm">
+          <tr *ngFor="let m of pagedMovements()" class="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors group">
+            <td class="py-3.5 px-5 text-slate-500 dark:text-slate-400 text-xs">{{ m.date | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td class="py-3.5 px-4">
+              <span [ngClass]="{
+                'bg-emerald-500/10 text-emerald-500 border-emerald-500/20': m.type === 'INGRESO',
+                'bg-rose-500/10 text-rose-500 border-rose-500/20': m.type === 'EGRESO' || m.type === 'MERMA',
+                'bg-amber-500/10 text-amber-500 border-amber-500/20': m.type === 'AJUSTE'
+              }" class="px-2 py-0.5 rounded-full text-[10px] font-bold border">
+                {{ m.type }}
+              </span>
+            </td>
+            <td class="py-3.5 px-4">
+              <p class="font-semibold text-slate-800 dark:text-slate-200">{{ m.productName }}</p>
+              <p class="text-[10px] font-mono text-indigo-400 uppercase">{{ m.loteCode }}</p>
+            </td>
+            <td class="py-3.5 px-4 text-slate-600 dark:text-slate-400 text-xs">
+              <span class="flex items-center gap-1"><span class="material-icons text-xs">store</span> {{ m.branchName }}</span>
+            </td>
+            <td class="py-3.5 px-4 text-center font-bold text-slate-800 dark:text-slate-200 font-mono">{{ m.quantity }}</td>
+            <td class="py-3.5 px-5 text-slate-400 italic text-[11px] italic max-w-xs truncate" [title]="m.observation || ''">
+              {{ m.observation || 'Sin detalles' }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <shared-paginator [currentPage]="currentPage()" [totalPages]="totalPages()" (pageChange)="onPageChange($event)"></shared-paginator>
+  </div>
+</div>
