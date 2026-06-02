@@ -57,7 +57,7 @@ export class SummaryPageComponent {
         }
       },
       tooltip: {
-        backgroundColor: '#0f172a', // Caja flotante estilo Slate oscuro
+        backgroundColor: '#0f172a', 
         titleColor: '#fff',
         bodyColor: '#94a3b8',
         borderColor: '#334155',
@@ -66,14 +66,14 @@ export class SummaryPageComponent {
     },
     scales: {
       x: {
-        grid: { display: false }, // Limpieza absoluta eliminando las rejillas verticales
+        grid: { display: false }, 
         ticks: { color: '#64748b' }
       },
       y: {
-        grid: { color: 'rgba(51, 65, 85, 0.25)' }, // Rejillas horizontales muy tenues
+        grid: { color: 'rgba(51, 65, 85, 0.25)' }, 
         ticks: {
           color: '#64748b',
-          callback: (value) => '$' + Number(value).toLocaleString() // Formato monetario en eje Y
+          callback: (value) => '$' + Number(value).toLocaleString() 
         }
       }
     }
