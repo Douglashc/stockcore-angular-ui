@@ -26,6 +26,8 @@ import { BranchFormComponent } from './components/branches/branch-form/branch-fo
 import { BranchesPageComponent } from './pages/branches-page/branches-page.component';
 import { BuyFormComponent } from './components/buys/buy-form/buy-form.component';
 import { BuysPageComponent } from './pages/buys-page/buys-page.component';
+import { SaleFormComponent } from './components/sales/sale-form/sale-form.component';
+import { SalesPageComponent } from './pages/sales-page/sales-page.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { BuysPageComponent } from './pages/buys-page/buys-page.component';
     BranchFormComponent,
     BranchesPageComponent,
     BuyFormComponent,
-    BuysPageComponent
+    BuysPageComponent,
+    SaleFormComponent,
+    SalesPageComponent
   ],
   imports: [
     CommonModule,

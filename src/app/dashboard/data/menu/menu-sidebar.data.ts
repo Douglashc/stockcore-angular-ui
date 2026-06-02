@@ -19,7 +19,7 @@ export const menuSidebarData: MenuGroup[] = [
         items: [
             { title: 'Movimientos Stock', icon: 'swap_horiz', route: '/dashboard/movimientos' },
             { title: 'Compras / Entradas', icon: 'shopping_cart', route: '/dashboard/buys' },
-            { title: 'Ventas / Salidas', icon: 'point_of_sale', route: '/dashboard/ventas' }
+            { title: 'Ventas / Salidas', icon: 'point_of_sale', route: '/dashboard/sales' }
         ]
     },
     {
